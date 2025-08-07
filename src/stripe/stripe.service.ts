@@ -6,9 +6,20 @@ export class StripeService {
   private stripe: Stripe;
 
   constructor() {
-    this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2022-11-15',
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+    if (!stripeSecretKey) {
+      throw new Error(
+        'STRIPE_SECRET_KEY is not defined in environment variables',
+      );
+    }
+
+    this.stripe = new Stripe(stripeSecretKey, {
+      apiVersion: '2022-11-15' as any,
     });
+
+    // this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    //   apiVersion: '2022-11-15',
+    // });
   }
 
   async createCheckoutSession(
