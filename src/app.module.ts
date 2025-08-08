@@ -6,7 +6,7 @@ import { StripeController } from './stripe/stripe.controller';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [StripeModule, ConfigModule.forRoot()],
+  imports: [StripeModule, ConfigModule.forRoot({ isGlobal: true })],
   controllers: [AppController, StripeController],
   providers: [AppService],
 })
